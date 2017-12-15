@@ -1,2 +1,2 @@
 # gopkg
-For p.qtrader.io/x/y
+For go get qtrx.io/pkg
