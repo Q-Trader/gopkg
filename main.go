@@ -6,8 +6,17 @@ import (
 	"github.com/labstack/echo"
 )
 
+const (
+	QTraderUrl = "https://qtrader.io"
+)
+
 func main() {
 	e := echo.New()
+	e.GET("/", func(c echo.Context) error {
+		c.Redirect(301, QTraderUrl)
+		c.Re
+		return nil
+	})
 	e.GET("/:pkg", func(c echo.Context) error {
 		// Package name from path `/:pkg`
 		pkg := c.Param("pkg")
@@ -23,7 +32,7 @@ func main() {
 			return c.HTML(http.StatusOK, htmlstring)
 
 		}
-		c.Redirect(301, "https://qtrader.io")
+		c.Redirect(301, QTraderUrl)
 		return nil
 
 	})
