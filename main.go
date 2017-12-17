@@ -7,14 +7,14 @@ import (
 )
 
 const (
-	QTraderUrl = "https://qtrader.io"
+	//QTraderURL for qtrader.io home page URL
+	QTraderURL = "https://qtrader.io"
 )
 
 func main() {
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {
-		c.Redirect(301, QTraderUrl)
-		c.Re
+		c.Redirect(301, QTraderURL)
 		return nil
 	})
 	e.GET("/:pkg", func(c echo.Context) error {
@@ -32,7 +32,7 @@ func main() {
 			return c.HTML(http.StatusOK, htmlstring)
 
 		}
-		c.Redirect(301, QTraderUrl)
+		c.Redirect(301, QTraderURL)
 		return nil
 
 	})
