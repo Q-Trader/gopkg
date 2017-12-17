@@ -1,4 +1,4 @@
-[![circle ci](https://circleci.com/gh/q-trader/gopkg.png)](https://circleci.com/gh/q-trader/gopkg.png)
+[![circle ci](https://circleci.com/gh/q-trader/gopkg.svg?style=shield)](https://circleci.com/gh/q-trader/gopkg.svg?style=shield)
 [![Go Report Card](https://goreportcard.com/badge/qtrx.io/gopkg)](https://goreportcard.com/report/qtrx.io/gopkg)
 
 
