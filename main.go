@@ -2,6 +2,8 @@ package main
 
 import (
 	"net/http"
+	"html/template"
+	"io"
 
 	"github.com/labstack/echo"
 )
@@ -11,8 +13,24 @@ const (
 	QTraderURL = "https://qtrader.io"
 )
 
+type PackageView struct {
+	Title string
+	Name  string
+}
+type Template struct {
+	templates *template.Template
+}
+
+func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
+	return t.templates.ExecuteTemplate(w, name, data)
+}
 func main() {
+	t := &Template{
+		templates: template.Must(template.ParseGlob("public/views/*.html")),
+	}
+
 	e := echo.New()
+	e.Renderer = t
 	e.GET("/", func(c echo.Context) error {
 		c.Redirect(301, QTraderURL)
 		return nil
@@ -27,17 +45,14 @@ func main() {
 }
 
 func handPkg(c echo.Context) error {
-	pkg := c.Param("pkg")
+	pkgName := c.Param("pkg")
 	isGoGet := c.QueryParam("go-get")
-	if pkg != "" && isGoGet == "1" {
-		htmlstring := `<html>
-	<head>
-        <meta name="go-import" content="qtrx.io/` + pkg + ` git https://github.com/q-trader/` + pkg + `">
-        <meta name="go-source" content="qtrx.io/` + pkg + `     https://github.com/q-trader/` + pkg + ` https://github.com/q-trader/` + pkg + `/tree/master{/dir} https://github.com/q-trader/` + pkg + `/blob/master{/dir}/{file}#L{line}">
-    </head>
-</html>
-`
-		return c.HTML(http.StatusOK, htmlstring)
+	pkg := &PackageView{
+		Title: pkgName,
+		Name:  pkgName,
+	}
+	if pkg.Name != "" && isGoGet == "1" {
+		return c.Render(http.StatusOK, "pkg.html", pkg)
 
 	}
 	c.Redirect(301, QTraderURL)
