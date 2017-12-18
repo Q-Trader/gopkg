@@ -3,4 +3,8 @@
 
 
 # Gopkg
-For go get qtrx.io/pkg
+You should import qtrader's go packages like this:
+
+```shell
+go get qtrx.io/x/y/z
+```
